@@ -5,14 +5,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ConsumerWebAppDanrevi.Models;
+using ApiProxy;
+using ApiProxy.Contracts;
+using Domain;
 
 namespace ConsumerWebAppDanrevi.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IArticleApiProxy _apiProxy;
+
+        public HomeController(IArticleApiProxy _apiProxy)
+        {
+            this._apiProxy = _apiProxy;
+        }
         public IActionResult Index()
         {
-            return View();
+           var result =  _apiProxy.All<ArticleShowViewModel>();
+            return View(result);
         }
 
         public IActionResult About()

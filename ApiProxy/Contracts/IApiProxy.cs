@@ -4,11 +4,11 @@ using System.Text;
 
 namespace ApiProxy.Contracts
 {
-    public interface IApiProxy<T>
+    public interface IApiProxy
     {
-        IList<T> All<T2>();
-        T Find<T2>(int id);
-        void Create<T2>(T article);
+        IList<T> All<T>();
+        T Find<T>(int id);
+        void Create<T>(T article);
         void Delete(int id);
 
     }

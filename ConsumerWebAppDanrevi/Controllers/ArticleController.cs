@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiProxy.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Domain;
 
 namespace ConsumerWebAppDanrevi.Controllers
 {
     public class ArticleController : Controller
     {
+        private readonly IArticleApiProxy _ApiProxy;
+        public ArticleController(IArticleApiProxy _apiProxy)
+        {
+            _ApiProxy = _apiProxy;
+        }
         // GET: Article
         public ActionResult Index()
         {
