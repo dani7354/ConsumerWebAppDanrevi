@@ -24,7 +24,7 @@ namespace ApiProxy
 
         public void Create<T>(T article) where T : ArticleBase
         {
-            throw new NotImplementedException();
+           
         }
 
         public void Delete(int id)
@@ -32,7 +32,17 @@ namespace ApiProxy
             throw new NotImplementedException();
         }
 
-        public void Find<T>(int id) where T : ArticleBase
+        public T Find<T>(int id) where T : ArticleBase
+        {
+            var url = $"{_baseEndpoint}/{id}";
+            var httpClient = new HttpClient();
+            var json = httpClient.GetStringAsync(url).Result;
+            var article = JsonConvert.DeserializeObject<T>(json);
+            return article;
+
+        }
+
+        public IList<T> GetByTag<T>(string tag)
         {
             throw new NotImplementedException();
         }

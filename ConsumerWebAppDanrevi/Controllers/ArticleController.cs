@@ -19,13 +19,15 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: Article
         public ActionResult Index()
         {
-            return View();
+            var articles = _ApiProxy.All<ArticleShowViewModel>();
+            return View(articles);
         }
 
         // GET: Article/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var article = _ApiProxy.Find<ArticleShowViewModel>(id);
+            return View(article);
         }
 
         // GET: Article/Create
