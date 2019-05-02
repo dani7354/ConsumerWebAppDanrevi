@@ -1,4 +1,4 @@
-﻿@model Domain.ArticleShowViewModel
+﻿@model Models.Article.ArticleDetailsViewModel
 
 @{
     ViewData["Title"] = "View";
@@ -29,10 +29,10 @@
             @Html.DisplayFor(model => model.Content)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Created)
+            @Html.DisplayNameFor(model => model.DateCreated)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Created)
+            @Html.DisplayFor(model => model.DateCreated)
         </dd>
     </dl>
 </div>

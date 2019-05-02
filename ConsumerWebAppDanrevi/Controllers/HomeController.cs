@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ConsumerWebAppDanrevi.Models;
 using ApiProxy;
 using ApiProxy.Contracts;
-using Domain;
+using Models.Article;
 
 namespace ConsumerWebAppDanrevi.Controllers
 {
@@ -21,7 +21,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         }
         public IActionResult Index()
         {
-           var result =  _apiProxy.All<ArticleShowViewModel>();
+           var result =  _apiProxy.All<ArticleDetailsViewModel>();
             return View(result);
         }
 

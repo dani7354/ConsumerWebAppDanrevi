@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApiProxy\ApiProxy.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
 </Project>

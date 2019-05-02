@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ApiProxy.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Domain;
+using Models.Article;
 
 namespace ConsumerWebAppDanrevi.Controllers
 {
@@ -19,14 +19,14 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: Article
         public ActionResult Index()
         {
-            var articles = _ApiProxy.All<ArticleShowViewModel>();
+            var articles = _ApiProxy.All<ArticleDetailsViewModel>();
             return View(articles);
         }
 
         // GET: Article/Details/5
         public ActionResult Details(int id)
         {
-            var article = _ApiProxy.Find<ArticleShowViewModel>(id);
+            var article = _ApiProxy.Find<ArticleDetailsViewModel>(id);
             return View(article);
         }
 

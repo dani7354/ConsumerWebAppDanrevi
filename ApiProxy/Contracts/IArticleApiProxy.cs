@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Security;
 using System.Text;
-using Domain;
+using Models.Article;
 
 namespace ApiProxy.Contracts
 {

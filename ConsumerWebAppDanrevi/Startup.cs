@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApiProxy.Contracts;
 using ApiProxy;
-using Domain;
+using Models.Article;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

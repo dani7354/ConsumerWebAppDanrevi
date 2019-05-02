@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ApiProxy.Contracts;
-using Domain;
+using Models.Article;
 using Newtonsoft.Json;
 
 namespace ApiProxy

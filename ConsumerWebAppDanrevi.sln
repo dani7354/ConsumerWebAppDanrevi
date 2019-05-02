@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsumerWebAppDanrevi", "ConsumerWebAppDanrevi\ConsumerWebAppDanrevi.csproj", "{B80BD6EA-705F-4437-80B8-08D65BF969E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsumerWebAppDanrevi", "ConsumerWebAppDanrevi\ConsumerWebAppDanrevi.csproj", "{B80BD6EA-705F-4437-80B8-08D65BF969E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{CCC9E58F-9E72-41ED-929E-2BC22D267FE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiProxy", "ApiProxy\ApiProxy.csproj", "{C26E772F-24CF-40A0-AEEF-A6E1C90F95B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiProxy", "ApiProxy\ApiProxy.csproj", "{C26E772F-24CF-40A0-AEEF-A6E1C90F95B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{301A2B0C-9FE3-4B01-BC6D-BD5143A7C330}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{B80BD6EA-705F-4437-80B8-08D65BF969E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B80BD6EA-705F-4437-80B8-08D65BF969E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B80BD6EA-705F-4437-80B8-08D65BF969E3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CCC9E58F-9E72-41ED-929E-2BC22D267FE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCC9E58F-9E72-41ED-929E-2BC22D267FE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CCC9E58F-9E72-41ED-929E-2BC22D267FE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CCC9E58F-9E72-41ED-929E-2BC22D267FE7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C26E772F-24CF-40A0-AEEF-A6E1C90F95B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C26E772F-24CF-40A0-AEEF-A6E1C90F95B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C26E772F-24CF-40A0-AEEF-A6E1C90F95B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C26E772F-24CF-40A0-AEEF-A6E1C90F95B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{301A2B0C-9FE3-4B01-BC6D-BD5143A7C330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301A2B0C-9FE3-4B01-BC6D-BD5143A7C330}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301A2B0C-9FE3-4B01-BC6D-BD5143A7C330}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301A2B0C-9FE3-4B01-BC6D-BD5143A7C330}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
