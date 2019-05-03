@@ -24,12 +24,26 @@ namespace ApiProxy
 
         public void Create<T>(T article) where T : ArticleBase
         {
-           
+            var httpClient = new HttpClient();
+            string json = JsonConvert.SerializeObject(article);
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = httpClient.PostAsync(_baseEndpoint, stringContent);
+            if (!response.Result.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException(response.Result.StatusCode.ToString());
+            }
+
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var url = $"{_baseEndpoint}/{id}";
+            var httpClient = new HttpClient();
+            var response = httpClient.DeleteAsync(url);
+            if (!response.Result.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException(response.Result.StatusCode.ToString());
+            }
         }
 
         public T Find<T>(int id) where T : ArticleBase
@@ -44,7 +58,11 @@ namespace ApiProxy
 
         public IList<T> GetByTag<T>(string tag)
         {
-            throw new NotImplementedException();
+            var url = $"{_baseEndpoint}/tag/{tag}";
+            var httpClient = new HttpClient();
+            var json = httpClient.GetStringAsync(url).Result;
+            var articles = JsonConvert.DeserializeObject<List<T>>(json);
+            return articles;
         }
 
         IList<T> IApiProxy.All<T>()

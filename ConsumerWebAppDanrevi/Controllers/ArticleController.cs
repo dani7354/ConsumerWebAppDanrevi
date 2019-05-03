@@ -33,21 +33,21 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: Article/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new ArticleCreateViewModel());
         }
 
         // POST: Article/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm] ArticleCreateViewModel article)
         {
             try
             {
-                // TODO: Add insert logic here
-
+              
+                _ApiProxy.Create<ArticleCreateViewModel>(article);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception)
             {
                 return View();
             }
@@ -79,24 +79,16 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: Article/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            _ApiProxy.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: Article/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+      
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+        public ActionResult GetByTag([FromQuery]string tag)
+        {
+            var articles = _ApiProxy.GetByTag<ArticleDetailsViewModel>(tag);
+            return View(nameof(Index), articles);
         }
     }
 }
