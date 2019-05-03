@@ -13,7 +13,6 @@ namespace Models.Article
         public Author Author { get; set; }
         [JsonProperty("tags")]
         public List<string> Tags { get; set; }
-
         [JsonProperty("date_created")]
         public DateTime DateCreated { get; set; }
     }

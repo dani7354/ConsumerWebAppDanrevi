@@ -56,6 +56,16 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: Article/Edit/5
         public ActionResult Edit(int id)
         {
+            try
+            {
+                var article = _ApiProxy.Find<ArticleDetailsViewModel>(id);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            
+           
             return View();
         }
 

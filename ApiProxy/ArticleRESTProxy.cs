@@ -12,7 +12,7 @@ namespace ApiProxy
 {
     public class ArticleRestProxy : IArticleApiProxy
     {
-        private string _baseEndpoint = "http://danrevi-api.azurewebsites.net/api/articles";
+        private string _baseEndpoint = "http://localhost:8000/api/articles";
 
         public IList<T> All<T>() where T : ArticleBase
         {
