@@ -17,16 +17,17 @@ namespace ConsumerWebAppDanrevi.Controllers
             _ApiProxy = _apiProxy;
         }
         // GET: Article
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var articles = _ApiProxy.All<ArticleDetailsViewModel>();
+            ViewBag.Title = "Nyheder";
+            var articles = await _ApiProxy.AllAsync<ArticleDetailsViewModel>();
             return View(articles);
         }
 
         // GET: Article/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var article = _ApiProxy.Find<ArticleDetailsViewModel>(id);
+            var article = await _ApiProxy.FindAsync<ArticleDetailsViewModel>(id);
             return View(article);
         }
 
@@ -39,12 +40,11 @@ namespace ConsumerWebAppDanrevi.Controllers
         // POST: Article/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([FromForm] ArticleCreateViewModel article)
+        public async Task<ActionResult> Create([FromForm] ArticleCreateViewModel article)
         {
             try
             {
-              
-                _ApiProxy.Create<ArticleCreateViewModel>(article);
+               await _ApiProxy.CreateAsync<ArticleCreateViewModel>(article);
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception)
@@ -54,17 +54,17 @@ namespace ConsumerWebAppDanrevi.Controllers
         }
 
         // GET: Article/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
             ArticleCreateViewModel articleEditModel = null;
             try
             {
-                var article = _ApiProxy.Find<ArticleDetailsViewModel>(id);
+                var article =  await _ApiProxy.FindAsync<ArticleDetailsViewModel>(id);
                 articleEditModel = new ArticleCreateViewModel()
                 {
                     Content = article.Content,
                     Title = article.Title,
-                    Tags = string.Join('#', article.Tags)
+                    Tags = "#" + string.Join('#', article.Tags)
                 };
             }
             catch (Exception)
@@ -79,10 +79,11 @@ namespace ConsumerWebAppDanrevi.Controllers
         // POST: Article/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [FromForm] ArticleCreateViewModel article)
+        public async  Task<ActionResult> Edit(int id, [FromForm] ArticleCreateViewModel article)
         {
             try
             {
+                await _ApiProxy.UpdateAsync<ArticleCreateViewModel>(id, article);
                
 
                 return RedirectToAction(nameof(Index));
@@ -94,17 +95,16 @@ namespace ConsumerWebAppDanrevi.Controllers
         }
 
         // GET: Article/Delete/5
-        public ActionResult Delete(int id)
+        public async  Task<ActionResult> Delete(int id)
         {
-            _ApiProxy.Delete(id);
+          await _ApiProxy.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-      
-
-        public ActionResult GetByTag([FromQuery]string tag)
+        public async Task<ActionResult> GetByTag([FromQuery]string tag)
         {
-            var articles = _ApiProxy.GetByTag<ArticleDetailsViewModel>(tag);
+            ViewBag.Title = $"#{tag}";
+            var articles = await _ApiProxy.GetByTagAsync<ArticleDetailsViewModel>(tag);
             return View(nameof(Index), articles);
         }
     }

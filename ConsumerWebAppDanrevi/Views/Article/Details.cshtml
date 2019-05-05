@@ -1,39 +1,29 @@
 ﻿@model Models.Article.ArticleDetailsViewModel
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = Model.Title;
 }
 
-<h2>View</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>ArticleDetailsViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
-            @Html.DisplayNameFor(model => model.Id)
+            Skrevet af
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Id)
+           <i> @Html.DisplayFor(model => model.Author.Name) (@Html.DisplayFor(model => model.Author.Email))</i>
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
         <dd>
             @Html.DisplayFor(model => model.DateCreated)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
+        <br />
         <dd>
             @Html.DisplayFor(model => model.Content)
         </dd>
+        <br />
         @foreach(var tag in Model.Tags){
         <dd>
             @Html.ActionLink("#" + tag, "GetByTag", new {  tag = tag }) 
@@ -42,6 +32,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>
