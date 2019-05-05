@@ -12,7 +12,7 @@ namespace ApiProxy.Contracts
         new IList<T> All<T>() where T : ArticleBase;
         new void Create<T>(T article) where T : ArticleBase;
 
-        void Update<T>(int id, T article);
+        void Update<T>(int id, T article) where T : ArticleBase;
         IList<T> GetByTag<T>(string tag);
 
     }
