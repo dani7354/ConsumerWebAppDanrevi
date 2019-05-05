@@ -56,27 +56,34 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: Article/Edit/5
         public ActionResult Edit(int id)
         {
+            ArticleCreateViewModel articleEditModel = null;
             try
             {
                 var article = _ApiProxy.Find<ArticleDetailsViewModel>(id);
+                articleEditModel = new ArticleCreateViewModel()
+                {
+                    Content = article.Content,
+                    Title = article.Title,
+                    Tags = string.Join('#', article.Tags)
+                };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction(nameof(Index));
             }
             
            
-            return View();
+            return View(articleEditModel);
         }
 
         // POST: Article/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [FromForm] ArticleCreateViewModel article)
         {
             try
             {
-                // TODO: Add update logic here
+               
 
                 return RedirectToAction(nameof(Index));
             }

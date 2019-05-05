@@ -65,6 +65,19 @@ namespace ApiProxy
             return articles;
         }
 
+        public void Update<T>(int id, T article)
+        {
+            var url = $"{_baseEndpoint}/{id}";
+            var httpClient = new HttpClient();
+            string json = JsonConvert.SerializeObject(article);
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = httpClient.PutAsync(_baseEndpoint, stringContent);
+            if (!response.Result.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException(response.Result.StatusCode.ToString());
+            }
+        }
+
         IList<T> IApiProxy.All<T>()
         {
             throw new NotImplementedException();
