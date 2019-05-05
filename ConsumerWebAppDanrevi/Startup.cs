@@ -32,8 +32,9 @@ namespace ConsumerWebAppDanrevi
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            // API proxies
             services.AddTransient<IArticleApiProxy, ArticleRestProxy>();
+            services.AddTransient<ICourseApiProxy, CourseRestProxy>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
