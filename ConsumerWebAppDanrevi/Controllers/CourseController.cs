@@ -70,7 +70,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         // POST: Course/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id,[FromForm] CourseCreateViewModel course)
+        public async Task<ActionResult> Edit([FromRoute]int id,[FromForm] CourseCreateViewModel course)
         {
             if (!ModelState.IsValid)
             {

@@ -8,22 +8,26 @@ namespace Models.Course
 {
     public abstract class CourseBase
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
+       
         [Required]
+        [JsonProperty("name")]
         public string Name { get; set; }
         [Required]
+        [JsonProperty("description")]
         public string Description { get; set; }
         [Required]
+        [JsonProperty("location")]
         public string Location { get; set;}
         [Required]
+        [JsonProperty("start")]
         public DateTime Start { get; set; }
         [Required]
+        [JsonProperty("end")]
         public DateTime End { get; set; }
         [Required]
+        [JsonProperty("host")]
         public string Host { get; set; }
         [JsonProperty("target_audience")]
-        [Required]
         public string TargetAudience { get; set; }
     }
 }

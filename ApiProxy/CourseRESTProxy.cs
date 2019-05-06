@@ -121,10 +121,7 @@ namespace ApiProxy
             string json = JsonConvert.SerializeObject(course);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PutAsync(url, stringContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.StatusCode.ToString());
-            }
+           
         }
     }
 }
