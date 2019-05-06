@@ -13,16 +13,14 @@ namespace ConsumerWebAppDanrevi.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IArticleApiProxy _apiProxy;
 
-        public HomeController(IArticleApiProxy _apiProxy)
+        public HomeController()
         {
-            this._apiProxy = _apiProxy;
+           
         }
         public IActionResult Index()
         {
-           var result =  _apiProxy.All<ArticleDetailsViewModel>();
-            return View(result);
+            return View();
         }
 
         public IActionResult About()
