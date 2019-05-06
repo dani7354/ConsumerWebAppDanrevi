@@ -12,6 +12,21 @@ namespace ApiProxy
     public class CourseRestProxy : ICourseApiProxy
     {
         private readonly string _baseEndpoint = "http://localhost:8000/api/courses";
+
+        public async Task AddParticipantAsync(int courseId, string participantEmail)
+        {
+            var httpClient = new HttpClient();
+            var url = $"{_baseEndpoint}/{courseId}/participants";
+            var json = "{\"email\":\"" + participantEmail + "\"}";
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync(url, stringContent);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException(response.StatusCode.ToString());
+            }
+
+        }
+
         public IList<T> All<T>()
         {
             throw new NotImplementedException();
@@ -52,6 +67,24 @@ namespace ApiProxy
             var url = $"{_baseEndpoint}/{id}";
             var httpClient = new HttpClient();
             var response = await httpClient.DeleteAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException(response.StatusCode.ToString());
+            }
+        }
+
+        public async Task DeleteParticipantAsync(int courseId, string participantEmail)
+        {
+            var httpClient = new HttpClient();
+            var url = $"{_baseEndpoint}/{courseId}/participants";
+            var json = "{\"email\":\"" + participantEmail + "\"}";
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(url),
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+            var response = await httpClient.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
                 throw new HttpRequestException(response.StatusCode.ToString());

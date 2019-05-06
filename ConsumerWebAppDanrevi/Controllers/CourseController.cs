@@ -94,5 +94,20 @@ namespace ConsumerWebAppDanrevi.Controllers
             await _apiProxy.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<ActionResult> DeleteParticipant([FromQuery] int courseId, [FromQuery] string email)
+        {
+           await  _apiProxy.DeleteParticipantAsync(courseId, email);
+
+            return RedirectToAction(nameof(Details), new { id = courseId });
+
+        }
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddParticipant([FromQuery] int courseId, [FromForm] string email)
+        {
+            await _apiProxy.AddParticipantAsync(courseId, email);
+            return RedirectToAction(nameof(Details), new { id = courseId });
+
+        }
     }
 }

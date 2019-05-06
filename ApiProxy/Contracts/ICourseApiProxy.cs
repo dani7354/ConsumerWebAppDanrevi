@@ -18,5 +18,7 @@ namespace ApiProxy.Contracts
         Task CreateAsync<T>(T article) where T : CourseBase;
         Task UpdateAsync<T>(int id, T article) where T : CourseBase;
         Task DeleteAsync(int id);
+        Task DeleteParticipantAsync(int courseId, string participantEmail);
+        Task AddParticipantAsync(int courseId, string participantEmail);
     }
 }

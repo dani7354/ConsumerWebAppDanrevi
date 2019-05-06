@@ -55,6 +55,37 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <h3>Tilmeldte ansatte</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var p in Model.Participants){
+            <tr>
+                <td>@p.Name</td>
+                <td>@p.Email</td>
+                <td>@Html.ActionLink("Frameld", "DeleteParticipant", new { courseId = Model.Id, email = p.Email })</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    @using (Html.BeginForm("AddParticipant", "Course", new { courseId = Model.Id }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.Label("Email")
+        @Html.TextBox("email")
+
+        <button type="submit">Tilmeld</button>
+    }
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>
