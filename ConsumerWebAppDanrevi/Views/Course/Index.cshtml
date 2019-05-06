@@ -61,9 +61,9 @@
                 @Html.DisplayFor(modelItem => item.TargetAudience)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Ændr", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Info og tilmelding", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Slet", "Delete", new { id = item.Id })
             </td>
         </tr>
 }

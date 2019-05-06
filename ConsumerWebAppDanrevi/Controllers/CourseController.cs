@@ -3,39 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using ApiProxy.Contracts;
+using Models.Course;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ConsumerWebAppDanrevi.Controllers
 {
     public class CourseController : Controller
     {
-        // GET: Course
-        public ActionResult Index()
+        private readonly ICourseApiProxy _apiProxy;
+        public CourseController(ICourseApiProxy apiProxy)
         {
-            return View();
+            _apiProxy = apiProxy;
+        }
+        // GET: Course
+        public async Task<ActionResult> Index()
+        {
+            ViewBag.Title = "Alle kurser";
+            var courses = await _apiProxy.AllAsync<CourseDetailsViewModel>();
+            return View(courses);
         }
 
         // GET: Course/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+         
+            var course = await _apiProxy.FindWithParticipantsAsync<CourseDetailsViewModel>(id);
+            ViewBag.Title = course.Name;
+            return View(course);
         }
 
         // GET: Course/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Title = "Opret nyt kursus";
+            return View(new CourseCreateViewModel());
         }
 
         // POST: Course/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create([FromForm] CourseCreateViewModel course)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(course);
+            }
             try
             {
-                // TODO: Add insert logic here
-
+                await _apiProxy.CreateAsync(course);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -45,19 +61,24 @@ namespace ConsumerWebAppDanrevi.Controllers
         }
 
         // GET: Course/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var course = await _apiProxy.FindAsync<CourseCreateViewModel>(id);
+            return View(course);
         }
 
         // POST: Course/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id,[FromForm] CourseCreateViewModel course)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(course);
+            }
             try
             {
-                // TODO: Add update logic here
+                await _apiProxy.UpdateAsync(id, course);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -68,26 +89,10 @@ namespace ConsumerWebAppDanrevi.Controllers
         }
 
         // GET: Course/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
-        }
-
-        // POST: Course/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await _apiProxy.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
