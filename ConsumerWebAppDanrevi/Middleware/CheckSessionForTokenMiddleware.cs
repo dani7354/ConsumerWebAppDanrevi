@@ -22,7 +22,7 @@ namespace ConsumerWebAppDanrevi.Middleware
             {
                 context.Response.Redirect("/Login");
                 return;
-            }
+            }   
            
             // Call the next delegate/middleware in the pipeline
             await _next(context);
