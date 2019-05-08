@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Session;
+using System.Collections.Generic;
 
 namespace ConsumerWebAppDanrevi.Middleware
 {
@@ -18,7 +19,12 @@ namespace ConsumerWebAppDanrevi.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if(!context.Session.Keys.Any(x => x == "token") && context.Request.Path.Value != "/Login")
+            var publicPaths = new List<string>() // indlæses i constructoren
+            {
+                "/Login",
+                "/Login/Login"
+            };
+            if(!context.Session.Keys.Any(x => x == "token") &&  !publicPaths.Contains(context.Request.Path.Value))
             {
                 context.Response.Redirect("/Login");
                 return;

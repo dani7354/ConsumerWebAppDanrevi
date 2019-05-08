@@ -28,7 +28,7 @@ namespace ConsumerWebAppDanrevi.Controllers
             return View(new LoginViewModel());
         }
         // POST
-        public ActionResult Login([FromForm] LoginViewModel credentials)
+        public async Task<ActionResult> Login([FromForm] LoginViewModel credentials)
         {
             if (!ModelState.IsValid)
             {
@@ -36,8 +36,11 @@ namespace ConsumerWebAppDanrevi.Controllers
             }
             try
             {
-                string token = _apiProxy.GetToken(credentials.Email, credentials.Password);
-                HttpContext.Session.SetString("token", token);
+                var user = await _apiProxy.LoginAsync<LoginViewModel>(credentials);
+                HttpContext.Session.SetString("token", user.Token);
+                HttpContext.Session.SetString("email", user.Email);
+                HttpContext.Session.SetString("name", user.Name);
+
             }
             catch (Exception ex)
             {
