@@ -11,7 +11,11 @@ namespace ApiProxy
 {
     public class CourseRestProxy : ICourseApiProxy
     {
-        private readonly string _baseEndpoint = "http://localhost:8000/api/courses";
+        private readonly string _baseEndpoint;
+        public CourseRestProxy(string baseEndpoint)
+        {
+            _baseEndpoint = baseEndpoint;
+        }
 
         public async Task AddParticipantAsync(int courseId, string participantEmail)
         {

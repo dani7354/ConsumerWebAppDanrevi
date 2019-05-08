@@ -13,6 +13,7 @@ namespace ConsumerWebAppDanrevi.Controllers
 {
     public class HomeController : Controller
     {
+        
 
         public HomeController()
         {

@@ -26,6 +26,19 @@ namespace ConsumerWebAppDanrevi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(/*options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = true;
+            }*/);
+
+
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -33,8 +46,9 @@ namespace ConsumerWebAppDanrevi
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             // API proxies
-            services.AddTransient<IArticleApiProxy, ArticleRestProxy>();
-            services.AddTransient<ICourseApiProxy, CourseRestProxy>();
+            
+            services.AddTransient<IArticleApiProxy>(p => new ArticleRestProxy(Configuration.GetValue<string>("ApiEndpoints:Articles")));
+            services.AddTransient<ICourseApiProxy>(p => new CourseRestProxy(Configuration.GetValue<string>("ApiEndpoints:Courses")));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -51,10 +65,9 @@ namespace ConsumerWebAppDanrevi
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
             app.UseStaticFiles();
+            app.UseSession();
             app.UseCookiePolicy();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

@@ -12,7 +12,11 @@ namespace ApiProxy
 {
     public class ArticleRestProxy : IArticleApiProxy
     {
-        private string _baseEndpoint = "http://localhost:8000/api/articles";
+        private readonly string _baseEndpoint;
+        public ArticleRestProxy(string baseEndpoint)
+        {
+            _baseEndpoint = baseEndpoint;
+        }
 
         public IList<T> All<T>() where T : ArticleBase
         {
