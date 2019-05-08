@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Models.Login;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Session;
 
@@ -15,8 +16,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-
-            return View();
+            return View(new LoginViewModel());
         }
     }
 }

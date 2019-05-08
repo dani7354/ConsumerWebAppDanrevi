@@ -6,6 +6,7 @@ using ApiProxy.Contracts;
 using ApiProxy;
 using Models.Article;
 using Microsoft.AspNetCore.Builder;
+using ConsumerWebAppDanrevi.Middleware;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -67,6 +68,7 @@ namespace ConsumerWebAppDanrevi
             }
             app.UseStaticFiles();
             app.UseSession();
+            app.UseMiddleware<CheckSessionForTokenMiddleware>();
             app.UseCookiePolicy();
             app.UseMvc(routes =>
             {
