@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Session;
 using ApiProxy.Contracts;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -42,12 +43,17 @@ namespace ConsumerWebAppDanrevi.Controllers
                 HttpContext.Session.SetString("name", user.Name);
 
             }
+            catch(HttpRequestException ex)
+            {
+                ViewBag.Ex = ex.Message;
+                return View("Index");
+            }
             catch (Exception ex)
             {
-                return StatusCode(400, ex.Message);
+                return StatusCode(500, ex.Message);
             }
 
-            return RedirectToAction(nameof(Index), nameof(HomeController), null);
+            return RedirectToAction(nameof(Index), "Home", null);
         }
     }
 }

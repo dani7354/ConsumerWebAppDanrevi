@@ -19,14 +19,15 @@ namespace ApiProxy
 
         public async Task<User> LoginAsync<T>(T userCredentials)
         {
-            var url = $"{_baseEndpoint}/token";
+            var url = $"{_baseEndpoint}";
             HttpClient httpClient = new HttpClient();
             var json = JsonConvert.SerializeObject(userCredentials);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(url, stringContent);
-            var user = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
-
-            return user;
+            response.EnsureSuccessStatusCode();
+           
+         
+            return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
         }
     }
 }
