@@ -13,10 +13,10 @@ using System.Net.Http;
 
 namespace ConsumerWebAppDanrevi.Controllers
 {
-    public class LoginController : Controller
+    public class AuthController : Controller
     {
         private readonly IAuthApiProxy _apiProxy;
-        public LoginController(IAuthApiProxy apiProxy)
+        public AuthController(IAuthApiProxy apiProxy)
         {
            _apiProxy= apiProxy;
         }
@@ -24,11 +24,12 @@ namespace ConsumerWebAppDanrevi.Controllers
        
 
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View(new LoginViewModel());
         }
         // POST
+        [HttpPost]
         public async Task<ActionResult> Login([FromForm] LoginViewModel credentials)
         {
             if (!ModelState.IsValid)
@@ -46,14 +47,14 @@ namespace ConsumerWebAppDanrevi.Controllers
             catch(HttpRequestException ex)
             {
                 ViewBag.Ex = ex.Message;
-                return View("Index");
+                return View();
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, "Fejl i api-kald: " + ex.Message);
             }
 
-            return RedirectToAction(nameof(Index), "Home", null);
+            return RedirectToAction("Index", "Home", null);
         }
     }
 }

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Login\" />
+    <Folder Include="Views\Auth\" />
     <Folder Include="Middleware\" />
   </ItemGroup>
 </Project>

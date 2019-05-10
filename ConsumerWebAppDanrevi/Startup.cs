@@ -68,7 +68,7 @@ namespace ConsumerWebAppDanrevi
             }
             app.UseStaticFiles();
             app.UseSession();
-            app.UseMiddleware<CheckSessionForTokenMiddleware>();
+            app.UseMiddleware<TokenAuthMiddleware>();
             app.UseCookiePolicy();
             app.UseMvc(routes =>
             {

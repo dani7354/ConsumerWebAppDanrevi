@@ -7,26 +7,24 @@ using System.Collections.Generic;
 
 namespace ConsumerWebAppDanrevi.Middleware
 {
-    public class CheckSessionForTokenMiddleware 
+    public class TokenAuthMiddleware 
     {
 
         private readonly RequestDelegate _next;
+        
 
-        public CheckSessionForTokenMiddleware(RequestDelegate next)
+        public TokenAuthMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var publicPaths = new List<string>() // indlæses i constructoren
+            var loginRoute = "/Auth/Login";
+           
+            if(!context.Session.Keys.Any(x => x == "token") &&  context.Request.Path.Value != loginRoute)
             {
-                "/Login",
-                "/Login/Login"
-            };
-            if(!context.Session.Keys.Any(x => x == "token") &&  !publicPaths.Contains(context.Request.Path.Value))
-            {
-                context.Response.Redirect("/Login");
+                context.Response.Redirect(loginRoute);
                 return;
             }   
            
