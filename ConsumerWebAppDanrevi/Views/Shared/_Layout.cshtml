@@ -30,9 +30,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @if (Context.Session.Keys.Any(x => x == "token"))
+                    {
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Article" asp-action="Index">Nyheder</a></li>
                     <li><a asp-area="" asp-controller="Course" asp-action="Index">Kurser</a></li>
+                    <li><a asp-area="" asp-controller="Auth" asp-action="Logout">Log af</a></li>
+                    }
                 </ul>
             </div>
         </div>

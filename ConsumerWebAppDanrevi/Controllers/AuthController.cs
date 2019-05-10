@@ -34,11 +34,11 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", credentials);
+                return View(credentials);
             }
             try
             {
-                var user = await _apiProxy.LoginAsync<LoginViewModel>(credentials);
+                var user = await _apiProxy.LoginAsync(credentials);
                 HttpContext.Session.SetString("token", user.Token);
                 HttpContext.Session.SetString("email", user.Email);
                 HttpContext.Session.SetString("name", user.Name);
@@ -55,6 +55,13 @@ namespace ConsumerWebAppDanrevi.Controllers
             }
 
             return RedirectToAction("Index", "Home", null);
+        }
+        [HttpGet]
+        public  ActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction(nameof(Login));
+
         }
     }
 }
