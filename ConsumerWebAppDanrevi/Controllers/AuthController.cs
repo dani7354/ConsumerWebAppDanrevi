@@ -21,8 +21,6 @@ namespace ConsumerWebAppDanrevi.Controllers
            _apiProxy= apiProxy;
         }
 
-       
-
         // GET: /<controller>/
         public IActionResult Login()
         {
@@ -52,7 +50,7 @@ namespace ConsumerWebAppDanrevi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Fejl i api-kald: " + ex.Message);
+                return StatusCode(500, "Fejl: " + ex.Message);
             }
 
             return RedirectToAction("Index", "Home", null);

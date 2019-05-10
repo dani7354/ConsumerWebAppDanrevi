@@ -14,4 +14,7 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Contracts\IApiProxy.cs" />
+  </ItemGroup>
 </Project>

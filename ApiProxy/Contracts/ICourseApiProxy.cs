@@ -6,10 +6,6 @@ namespace ApiProxy.Contracts
 {
     public interface ICourseApiProxy : IApiProxy
     {
-       new IList<T> All<T>();
-      new T Find<T>(int id);
-      new void Create<T>(T article);
-       new void Delete(int id);
 
         // Async
         Task<T> FindAsync<T>(int id) where T : CourseBase;
