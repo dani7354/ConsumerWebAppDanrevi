@@ -41,10 +41,8 @@ namespace ApiProxy
             string json = JsonConvert.SerializeObject(article);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = httpClient.PostAsync(_baseEndpoint, stringContent);
-            if (!response.Result.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.Result.StatusCode.ToString());
-            }
+           
+
 
         }
 
@@ -54,10 +52,7 @@ namespace ApiProxy
             string json = JsonConvert.SerializeObject(article);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(_baseEndpoint, stringContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.StatusCode.ToString());
-            }
+            response.EnsureSuccessStatusCode();
         }
 
         public void Delete(int id)
@@ -76,10 +71,7 @@ namespace ApiProxy
             var url = $"{_baseEndpoint}/{id}";
             var httpClient = new HttpClient();
             var response = await httpClient.DeleteAsync(url);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.StatusCode.ToString());
-            }
+            response.EnsureSuccessStatusCode();
         }
 
         public T Find<T>(int id) where T : ArticleBase
@@ -127,10 +119,6 @@ namespace ApiProxy
             string json = JsonConvert.SerializeObject(article);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = httpClient.PutAsync(url, stringContent);
-            if (!response.Result.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.Result.StatusCode.ToString());
-            }
         }
 
         public async Task UpdateAsync<T>(int id, T article) where T : ArticleBase
@@ -140,10 +128,7 @@ namespace ApiProxy
             string json = JsonConvert.SerializeObject(article);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PutAsync(url, stringContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.StatusCode.ToString());
-            }
+            response.EnsureSuccessStatusCode();
 
         }
 

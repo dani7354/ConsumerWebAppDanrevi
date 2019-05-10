@@ -24,10 +24,7 @@ namespace ApiProxy
             var json = "{\"email\":\"" + participantEmail + "\"}";
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(url, stringContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.StatusCode.ToString());
-            }
+            response.EnsureSuccessStatusCode();
 
         }
 
@@ -55,10 +52,7 @@ namespace ApiProxy
             string json = JsonConvert.SerializeObject(course);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(_baseEndpoint, stringContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.StatusCode.ToString());
-            }
+            response.EnsureSuccessStatusCode();
         }
 
         public void Delete(int id)
@@ -71,10 +65,7 @@ namespace ApiProxy
             var url = $"{_baseEndpoint}/{id}";
             var httpClient = new HttpClient();
             var response = await httpClient.DeleteAsync(url);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.StatusCode.ToString());
-            }
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteParticipantAsync(int courseId, string participantEmail)
@@ -89,10 +80,7 @@ namespace ApiProxy
                 Content = new StringContent(json, Encoding.UTF8, "application/json")
             };
             var response = await httpClient.SendAsync(request);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.StatusCode.ToString());
-            }
+            response.EnsureSuccessStatusCode();
         }
 
         public T Find<T>(int id)
@@ -125,7 +113,7 @@ namespace ApiProxy
             string json = JsonConvert.SerializeObject(course);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PutAsync(url, stringContent);
-           
+            response.EnsureSuccessStatusCode();
         }
     }
 }

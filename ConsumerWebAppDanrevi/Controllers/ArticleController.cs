@@ -83,7 +83,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-                await _ApiProxy.UpdateAsync<ArticleCreateViewModel>(id, article);
+                await _ApiProxy.UpdateAsync(id, article);
                
 
                 return RedirectToAction(nameof(Index));
