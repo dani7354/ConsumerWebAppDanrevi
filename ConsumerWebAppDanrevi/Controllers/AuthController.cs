@@ -30,6 +30,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         }
         // POST
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login([FromForm] LoginViewModel credentials)
         {
             if (!ModelState.IsValid)

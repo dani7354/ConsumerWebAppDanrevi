@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using ConsumerWebAppDanrevi.Models;
 using ApiProxy;
 using ApiProxy.Contracts;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http;
 using Models.Article;
 
 namespace ConsumerWebAppDanrevi.Controllers
@@ -21,6 +23,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.Name = HttpContext.Session.GetString("name");
             return View();
         }
 
