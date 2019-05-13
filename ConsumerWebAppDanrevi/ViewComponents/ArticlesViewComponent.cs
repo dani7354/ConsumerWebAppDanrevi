@@ -3,20 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using ApiProxy.Contracts;
 using System.Threading.Tasks;
 using System.Linq;
-using Models.Course;
-
+using Models.Article;
 namespace ConsumerWebAppDanrevi.ViewComponents
 {
-    public class ArticlesViewComponent : ViewComponent
+    public class ArticlesViewComponent
     {
-        public ArticlesViewComponent()
-        {
+        private readonly IArticleApiProxy _apiProxy;
 
-        }
-        public async Task<IViewComponentResult> Invoke([FromServices] ICourseApiProxy apiProxy, int records=5)
+        public ArticlesViewComponent(IArticleApiProxy apiProxy)
         {
-            var courses = await apiProxy.AllAsync<CourseDetailsViewModel>();
-            return View(courses.OrderBy(c => c.Start).Take(records));
+            _apiProxy = apiProxy;
+        }
+        public IViewComponentResult Invoke()
+        {
+            var articles = _apiProxy.AllAsync<ArticleDetailsViewModel>().Result;
+            return View(articles.OrderBy(a => a.DateCreated));
         }
     }
 }

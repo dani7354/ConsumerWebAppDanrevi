@@ -1,5 +1,20 @@
 ﻿@{
     ViewData["Title"] = "Forside";
 }
-<h1>Forside</h1>
-<h3>Velkommen, @ViewBag.Name</h3>
+<h1>Velkommen, @ViewBag.Name</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>Seneste nyheder</h2>
+
+
+        </div>
+        <div class="col-sm-4">
+            @await Component.InvokeAsync("Courses", new { records = 4} )
+        </div>
+    </div>
+</div>
+
+<div class="text-right">
+
+</div>

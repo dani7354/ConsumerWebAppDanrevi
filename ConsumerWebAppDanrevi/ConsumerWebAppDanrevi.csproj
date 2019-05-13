@@ -19,5 +19,8 @@
     <Folder Include="Views\Auth\" />
     <Folder Include="Middleware\" />
     <Folder Include="ViewComponents\" />
+    <Folder Include="Views\Shared\Components\" />
+    <Folder Include="Views\Shared\Components\Courses\" />
+    <Folder Include="Views\Shared\Components\Articles\" />
   </ItemGroup>
 </Project>
