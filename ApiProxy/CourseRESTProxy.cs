@@ -17,9 +17,10 @@ namespace ApiProxy
             _baseEndpoint = baseEndpoint;
         }
 
-        public async Task AddParticipantAsync(int courseId, string participantEmail)
+        public async Task AddParticipantAsync(int courseId, string participantEmail, string apiToken)
         {
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             var url = $"{_baseEndpoint}/{courseId}/participants";
             var json = "{\"email\":\"" + participantEmail + "\"}";
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
@@ -46,31 +47,29 @@ namespace ApiProxy
             throw new NotImplementedException();
         }
 
-        public async Task CreateAsync<T>(T course) where T : CourseBase
+        public async Task CreateAsync<T>(T course, string apiToken) where T : CourseBase
         {
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             string json = JsonConvert.SerializeObject(course);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(_baseEndpoint, stringContent);
             response.EnsureSuccessStatusCode();
         }
 
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id, string apiToken)
         {
             var url = $"{_baseEndpoint}/{id}";
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             var response = await httpClient.DeleteAsync(url);
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task DeleteParticipantAsync(int courseId, string participantEmail)
+        public async Task DeleteParticipantAsync(int courseId, string participantEmail, string apiToken)
         {
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             var url = $"{_baseEndpoint}/{courseId}/participants";
             var json = "{\"email\":\"" + participantEmail + "\"}";
             var request = new HttpRequestMessage
@@ -97,19 +96,21 @@ namespace ApiProxy
             return course;
         }
 
-        public async Task<T> FindWithParticipantsAsync<T>(int id) where T : CourseBase
+        public async Task<T> FindWithParticipantsAsync<T>(int id, string apiToken) where T : CourseBase
         {
             var url = $"{_baseEndpoint}/{id}/participants";
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             var json = await httpClient.GetStringAsync(url);
             var course = JsonConvert.DeserializeObject<T>(json);
             return course;
         }
 
-        public async Task UpdateAsync<T>(int id, T course) where T : CourseBase
+        public async Task UpdateAsync<T>(int id, T course, string apiToken) where T : CourseBase
         {
             var url = $"{_baseEndpoint}/{id}";
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             string json = JsonConvert.SerializeObject(course);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PutAsync(url, stringContent);

@@ -9,12 +9,12 @@ namespace ApiProxy.Contracts
 
         // Async
         Task<T> FindAsync<T>(int id) where T : CourseBase;
-        Task<T> FindWithParticipantsAsync<T>(int id) where T : CourseBase;
+        Task<T> FindWithParticipantsAsync<T>(int id, string apiToken) where T : CourseBase;
         Task<IList<T>> AllAsync<T>() where T : CourseBase;
-        Task CreateAsync<T>(T article) where T : CourseBase;
-        Task UpdateAsync<T>(int id, T article) where T : CourseBase;
-        Task DeleteAsync(int id);
-        Task DeleteParticipantAsync(int courseId, string participantEmail);
-        Task AddParticipantAsync(int courseId, string participantEmail);
+        Task CreateAsync<T>(T article, string apiToken) where T : CourseBase;
+        Task UpdateAsync<T>(int id, T article, string apiToken) where T : CourseBase;
+        Task DeleteAsync(int id, string apiToken);
+        Task DeleteParticipantAsync(int courseId, string participantEmail, string apiToken);
+        Task AddParticipantAsync(int courseId, string participantEmail, string apiToken);
     }
 }

@@ -35,16 +35,7 @@ namespace ApiProxy
 
         }
 
-        public void Create<T>(T article) where T : ArticleBase
-        {
-            var httpClient = new HttpClient();
-            string json = JsonConvert.SerializeObject(article);
-            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = httpClient.PostAsync(_baseEndpoint, stringContent);
-           
-
-
-        }
+ 
 
         public async  Task CreateAsync<T>(T article, string apiToken) where T : ArticleBase
         {
