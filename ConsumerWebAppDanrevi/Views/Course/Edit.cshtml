@@ -1,16 +1,13 @@
 ﻿@model Models.Course.CourseCreateViewModel
 
-@{
-    ViewData["Title"] = "Edit";
-}
-
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 
 <h4>CourseCreateViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+            @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -55,7 +52,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Tilbage til oversigten</a>
 </div>
 
 @section Scripts {

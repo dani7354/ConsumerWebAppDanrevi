@@ -20,17 +20,31 @@ namespace ConsumerWebAppDanrevi.Controllers
         public async Task<ActionResult> Index()
         {
             ViewBag.Title = "Alle kurser";
-            var courses = await _apiProxy.AllAsync<CourseDetailsViewModel>();
-            return View(courses);
+            try
+            {
+                var courses = await _apiProxy.AllAsync<CourseDetailsViewModel>();
+                return View(courses);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+          
         }
 
         // GET: Course/Details/5
         public async Task<ActionResult> Details(int id)
         {
-         
-            var course = await _apiProxy.FindWithParticipantsAsync<CourseDetailsViewModel>(id, HttpContext.Session.GetString("token"));
-            ViewBag.Title = course.Name;
-            return View(course);
+            try
+            {
+                var course = await _apiProxy.FindWithParticipantsAsync<CourseDetailsViewModel>(id, HttpContext.Session.GetString("token"));
+                ViewBag.Title = course.Name;
+                return View(course);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // GET: Course/Create
@@ -54,15 +68,16 @@ namespace ConsumerWebAppDanrevi.Controllers
                 await _apiProxy.CreateAsync(course, HttpContext.Session.GetString("token"));
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                return StatusCode(500, ex.Message);
             }
         }
 
         // GET: Course/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
+            ViewBag.Title = "Ændr kursus";
             var course = await _apiProxy.FindAsync<CourseCreateViewModel>(id);
             return View(course);
         }
@@ -82,22 +97,37 @@ namespace ConsumerWebAppDanrevi.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                return StatusCode(500, ex.Message);
             }
         }
 
         // GET: Course/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            await _apiProxy.DeleteAsync(id, HttpContext.Session.GetString("token"));
+            try
+            {
+                await _apiProxy.DeleteAsync(id, HttpContext.Session.GetString("token"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+           
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<ActionResult> DeleteParticipant([FromQuery] int courseId, [FromQuery] string email)
         {
-           await  _apiProxy.DeleteParticipantAsync(courseId, email, HttpContext.Session.GetString("token"));
+            try
+            {
+                await _apiProxy.DeleteParticipantAsync(courseId, email, HttpContext.Session.GetString("token"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
 
             return RedirectToAction(nameof(Details), new { id = courseId });
 
@@ -105,7 +135,15 @@ namespace ConsumerWebAppDanrevi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddParticipant([FromQuery] int courseId, [FromForm] string email)
         {
-            await _apiProxy.AddParticipantAsync(courseId, email, HttpContext.Session.GetString("token"));
+            try
+            {
+                await _apiProxy.AddParticipantAsync(courseId, email, HttpContext.Session.GetString("token"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+         
             return RedirectToAction(nameof(Details), new { id = courseId });
 
         }
