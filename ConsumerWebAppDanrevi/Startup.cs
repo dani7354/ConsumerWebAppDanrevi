@@ -6,6 +6,7 @@ using ApiProxy.Contracts;
 using ApiProxy;
 using Models.Article;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Session;
 using ConsumerWebAppDanrevi.Middleware;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
