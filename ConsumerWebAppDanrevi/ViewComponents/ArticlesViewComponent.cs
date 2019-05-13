@@ -1,12 +1,14 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using ApiProxy.Contracts;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using ApiProxy.Contracts;
+
 using Models.Article;
 namespace ConsumerWebAppDanrevi.ViewComponents
 {
-    public class ArticlesViewComponent
+    public class ArticlesViewComponent : ViewComponent
     {
         private readonly IArticleApiProxy _apiProxy;
 

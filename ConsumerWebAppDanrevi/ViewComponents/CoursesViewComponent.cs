@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using ApiProxy.Contracts;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using ApiProxy.Contracts;
 using Models.Course;
 
 namespace ConsumerWebAppDanrevi.ViewComponents

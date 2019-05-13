@@ -1,5 +1,21 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Models.Article.ArticleDetailsViewModel>
 @{
+    const int MAX_LENGTH = 270;
+}
+<h2>Seneste nyheder</h2>
+@foreach(var a in Model)
+{
+<article>
+    <h3>@Html.ActionLink(a.Title, "Details", "Article", new { id = a.Id})</h3>
+    <i>@a.DateCreated af @a.Author.Name</i>
+    <p>
+       @if(a.Content.Length > MAX_LENGTH){
+           @a.Content.Substring(0, MAX_LENGTH)
+       }else{
+            @a.Content
+       }
+
+    </p>
+</article>
+
 }
