@@ -35,8 +35,6 @@ namespace ApiProxy
 
         }
 
- 
-
         public async  Task CreateAsync<T>(T article, string apiToken) where T : ArticleBase
         {
             var httpClient = new HttpClient();
