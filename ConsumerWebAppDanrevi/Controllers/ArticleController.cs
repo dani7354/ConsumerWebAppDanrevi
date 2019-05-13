@@ -44,7 +44,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-               await _ApiProxy.CreateAsync<ArticleCreateViewModel>(article);
+               await _ApiProxy.CreateAsync<ArticleCreateViewModel>(article, HttpContext.Session.GetString("token"));
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception)
@@ -83,7 +83,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-                await _ApiProxy.UpdateAsync(id, article);
+                await _ApiProxy.UpdateAsync(id, article, HttpContext.Session.GetString("token"));
                
 
                 return RedirectToAction(nameof(Index));
@@ -97,7 +97,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: Article/Delete/5
         public async  Task<ActionResult> Delete(int id)
         {
-          await _ApiProxy.DeleteAsync(id);
+          await _ApiProxy.DeleteAsync(id, HttpContext.Session.GetString("token"));
             return RedirectToAction(nameof(Index));
         }
 

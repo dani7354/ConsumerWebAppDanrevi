@@ -7,7 +7,7 @@ using Models.Article;
 
 namespace ApiProxy.Contracts
 {
-    public interface IArticleApiProxy : IApiProxy
+    public interface IArticleApiProxy 
     {
 
         // Async methods
@@ -15,9 +15,9 @@ namespace ApiProxy.Contracts
 
         Task<T> FindAsync<T>(int id) where T : ArticleBase;
         Task<IList<T>> AllAsync<T>() where T : ArticleBase;
-        Task CreateAsync<T>(T article) where T : ArticleBase;
-        Task UpdateAsync<T>(int id, T article) where T : ArticleBase;
+        Task CreateAsync<T>(T article, string apiToken) where T : ArticleBase;
+        Task UpdateAsync<T>(int id, T article, string apiToken) where T : ArticleBase;
         Task<IList<T>> GetByTagAsync<T>(string tag);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(int id, string apiToken);
     }
 }

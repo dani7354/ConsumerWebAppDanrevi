@@ -46,9 +46,10 @@ namespace ApiProxy
 
         }
 
-        public async  Task CreateAsync<T>(T article) where T : ArticleBase
+        public async  Task CreateAsync<T>(T article, string apiToken) where T : ArticleBase
         {
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             string json = JsonConvert.SerializeObject(article);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(_baseEndpoint, stringContent);
@@ -66,10 +67,11 @@ namespace ApiProxy
             }
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id, string apiToken)
         {
             var url = $"{_baseEndpoint}/{id}";
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             var response = await httpClient.DeleteAsync(url);
             response.EnsureSuccessStatusCode();
         }
@@ -121,10 +123,11 @@ namespace ApiProxy
             var response = httpClient.PutAsync(url, stringContent);
         }
 
-        public async Task UpdateAsync<T>(int id, T article) where T : ArticleBase
+        public async Task UpdateAsync<T>(int id, T article, string apiToken) where T : ArticleBase
         {
             var url = $"{_baseEndpoint}/{id}";
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             string json = JsonConvert.SerializeObject(article);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PutAsync(url, stringContent);
@@ -132,19 +135,6 @@ namespace ApiProxy
 
         }
 
-        IList<T> IApiProxy.All<T>()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IApiProxy.Create<T>(T article)
-        {
-            throw new NotImplementedException();
-        }
-
-        T IApiProxy.Find<T>(int id)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

@@ -38,9 +38,6 @@ namespace ConsumerWebAppDanrevi
                 // Make the session cookie essential
                 options.Cookie.IsEssential = true;
             }*/);
-
-
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -52,7 +49,7 @@ namespace ConsumerWebAppDanrevi
             services.AddTransient<IArticleApiProxy>(p => new ArticleRestProxy(Configuration.GetValue<string>("ApiEndpoints:Articles")));
             services.AddTransient<ICourseApiProxy>(p => new CourseRestProxy(Configuration.GetValue<string>("ApiEndpoints:Courses")));
             services.AddTransient<IAuthApiProxy>(p => new AuthRestProxy(Configuration.GetValue<string>("ApiEndpoints:Auth")));
-
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

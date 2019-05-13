@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Models.Course;
 namespace ApiProxy.Contracts
 {
-    public interface ICourseApiProxy : IApiProxy
+    public interface ICourseApiProxy 
     {
 
         // Async
