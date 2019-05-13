@@ -2,19 +2,26 @@
 @{
     ViewData["Title"] = "Log på";
 }
+<header>
+    <h2>@ViewBag.Title</h2>
+</header>
 
-<h2>@ViewBag.Title</h2>
- @using (Html.BeginForm("Login", "Auth"))
-{
-    @Html.ValidationSummary()
-    @Html.AntiForgeryToken()
+<div class="form-group">
+    @using (Html.BeginForm("Login", "Auth"))
+    {
+        @Html.ValidationSummary()
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, "e-mail ")
+            @Html.TextBoxFor(m => m.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, "kode ")
+            @Html.PasswordFor(m => m.Password)
+        </div>
+            <p>@ViewBag.Ex</p>
+            <button type="submit">Login</button>
 
-    @Html.LabelFor(m => m.Email)
-    @Html.TextBoxFor(m => m.Email)
+   }
 
-    @Html.LabelFor(m => m.Password)
-    @Html.PasswordFor(m => m.Password)
-    <p>@ViewBag.Ex</p>
-    <button type="submit">Login</button>
-    
-}
+

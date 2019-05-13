@@ -3,31 +3,28 @@
 @{
     ViewData["Title"] = Model.Title;
 }
-
-<h2>@ViewBag.Title</h2>
-
 <div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dd>
-            <i>  @Html.DisplayFor(model => model.Author.Name) (@Html.DisplayFor(model => model.Author.Email)) </i>
-</dd>
-        <dd>
-            <i>@Html.DisplayFor(model => model.DateCreated)</i>
-        </dd>
-        <br />
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <br />
-        @foreach(var tag in Model.Tags){
-        <dd>
-            @Html.ActionLink("#" + tag, "GetByTag", new {  tag = tag }) 
-        </dd>
-        }
-    </dl>
+    <header>
+        <h2>@ViewBag.Title</h2>
+        <i>@Html.DisplayFor(model => model.DateCreated) af @Html.DisplayFor(model => model.Author.Name) (@Html.DisplayFor(model => model.Author.Email))</i>
+    </header>
+    <br />
+    <p>
+        @Html.DisplayFor(model => model.Content)
+    </p>
+    @foreach (var tag in Model.Tags)
+    {
+        <p>
+            @Html.ActionLink("#" + tag, "GetByTag", new { tag = tag })
+        </p>
+    }
+        <div>
+            @Html.ActionLink("Ændr", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Tilbage til oversigten", "Index")
+        </div>
+
 </div>
-<div>
-    @Html.ActionLink("Ændr", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Tilbage til oversigten</a>
-</div>
+
+
+
+

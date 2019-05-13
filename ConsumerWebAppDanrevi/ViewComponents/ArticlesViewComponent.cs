@@ -19,7 +19,7 @@ namespace ConsumerWebAppDanrevi.ViewComponents
         public IViewComponentResult Invoke()
         {
             var articles = _apiProxy.AllAsync<ArticleDetailsViewModel>().Result;
-            return View(articles.OrderBy(a => a.DateCreated));
+            return View(articles.OrderByDescending(a => a.DateCreated));
         }
     }
 }
