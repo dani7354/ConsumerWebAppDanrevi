@@ -1,27 +1,35 @@
 ﻿@model Models.Login.LoginViewModel
+
 @{
     ViewData["Title"] = "Log på";
 }
-<header>
-    <h2>@ViewBag.Title</h2>
-</header>
 
-<div class="form-group">
-    @using (Html.BeginForm("Login", "Auth"))
-    {
-        @Html.ValidationSummary()
-        @Html.AntiForgeryToken()
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email, "e-mail ")
-            @Html.TextBoxFor(m => m.Email)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, "kode ")
-            @Html.PasswordFor(m => m.Password)
-        </div>
-            <p>@ViewBag.Ex</p>
-            <button type="submit">Login</button>
+<h2>@ViewBag.Title</h2>
 
-   }
 
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login" asp-controller="Auth">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Log på" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
