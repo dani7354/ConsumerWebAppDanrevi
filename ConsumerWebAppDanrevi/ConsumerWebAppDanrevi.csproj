@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Auth\" />
     <Folder Include="Middleware\" />
     <Folder Include="ViewComponents\" />
     <Folder Include="Views\Shared\Components\" />
