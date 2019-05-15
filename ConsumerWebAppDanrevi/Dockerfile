@@ -1,5 +1,5 @@
-﻿FROM microsoft/aspnetcore
+﻿FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
 COPY . .
 EXPOSE 80
-ENTRYPOINT ["dotnet", "myapp.dll"]
+ENTRYPOINT ["dotnet", "ConsumerWebAppDanrevi.dll"]
