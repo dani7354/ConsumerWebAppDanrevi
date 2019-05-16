@@ -1,0 +1,23 @@
+version: '3'
+services:
+  api:
+    image: "danrevi-webapi:latest"
+    ports:
+      - "8000:80"
+    networks:
+      - localnetwork
+  web:
+    image: "danrevi-apiconsumer:latest"
+    ports:
+      - "80:80"
+    networks:
+      - localnetwork
+networks:
+  localnetwork:
+
+  
+
+
+
+
+
