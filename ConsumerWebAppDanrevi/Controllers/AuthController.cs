@@ -45,7 +45,7 @@ namespace ConsumerWebAppDanrevi.Controllers
             }
             catch(HttpRequestException ex)
             {
-                ViewBag.Ex = ex.StackTrace;
+                ViewBag.Ex = ex.Message;
                 return View();
             }
             catch (Exception ex)

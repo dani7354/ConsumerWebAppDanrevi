@@ -4,11 +4,18 @@
 <h2>@ViewData["Title"]</h2>
 <p>
     @using (Html.BeginForm("GetByTag", "Article", new { tag = "" }, FormMethod.Get))
-    { 
+    {
 
-        @Html.Label("Søg tag")
-        @Html.TextBox("tag")
+        <label>
+            Søg på tag
+            <input list="tags" name="tag" />
+        </label>
+        <datalist id="tags">
+            @foreach(var t in ViewBag.Tags){
+                <option value="@t" />
+            }
 
+        </datalist>
         <button type="submit">Søg</button>
     }
 </p>
@@ -26,7 +33,7 @@
                 @Html.DisplayNameFor(model => model.DateCreated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title);
+                @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Content)

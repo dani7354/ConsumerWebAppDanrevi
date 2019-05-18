@@ -11,23 +11,27 @@ namespace ConsumerWebAppDanrevi.Controllers
 {
     public class ArticleController : Controller
     {
-        private readonly IArticleApiProxy _ApiProxy;
-        public ArticleController(IArticleApiProxy _apiProxy)
+        private readonly IArticleApiProxy _articlesApiProxy;
+        private readonly ITagApiProxy _tagApiProxy;
+
+        public ArticleController(IArticleApiProxy _articleApiProxy, ITagApiProxy tagApiProxy)
         {
-            _ApiProxy = _apiProxy;
+            _articlesApiProxy = _articleApiProxy;
+            this._tagApiProxy = tagApiProxy;
         }
         // GET: Article
         public async Task<ActionResult> Index()
         {
             ViewBag.Title = "Nyheder";
-            var articles = await _ApiProxy.AllAsync<ArticleDetailsViewModel>();
+            ViewBag.Tags = await _tagApiProxy.GetAllTagsAsync<string>();
+            var articles = await _articlesApiProxy.AllAsync<ArticleDetailsViewModel>();
             return View(articles.OrderByDescending(a => a.DateCreated));
         }
 
         // GET: Article/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var article = await _ApiProxy.FindAsync<ArticleDetailsViewModel>(id);
+            var article = await _articlesApiProxy.FindAsync<ArticleDetailsViewModel>(id);
             return View(article);
         }
 
@@ -45,7 +49,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-               await _ApiProxy.CreateAsync<ArticleCreateViewModel>(article, HttpContext.Session.GetString("token"));
+               await _articlesApiProxy.CreateAsync<ArticleCreateViewModel>(article, HttpContext.Session.GetString("token"));
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception)
@@ -60,7 +64,7 @@ namespace ConsumerWebAppDanrevi.Controllers
             ArticleCreateViewModel articleEditModel = null;
             try
             {
-                var article =  await _ApiProxy.FindAsync<ArticleDetailsViewModel>(id);
+                var article =  await _articlesApiProxy.FindAsync<ArticleDetailsViewModel>(id);
                 articleEditModel = new ArticleCreateViewModel()
                 {
                     Content = article.Content,
@@ -72,7 +76,7 @@ namespace ConsumerWebAppDanrevi.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            
+            ViewBag.Title = articleEditModel?.Title;
            
             return View(articleEditModel);
         }
@@ -84,7 +88,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-                await _ApiProxy.UpdateAsync(id, article, HttpContext.Session.GetString("token"));
+                await _articlesApiProxy.UpdateAsync(id, article, HttpContext.Session.GetString("token"));
                
 
                 return RedirectToAction(nameof(Index));
@@ -98,15 +102,16 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: Article/Delete/5
         public async  Task<ActionResult> Delete(int id)
         {
-          await _ApiProxy.DeleteAsync(id, HttpContext.Session.GetString("token"));
+          await _articlesApiProxy.DeleteAsync(id, HttpContext.Session.GetString("token"));
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<ActionResult> GetByTag([FromQuery]string tag)
         {
+            ViewBag.Tags = await _tagApiProxy.GetAllTagsAsync<string>();
             ViewBag.Title = $"#{tag}";
-            var articles = await _ApiProxy.GetByTagAsync<ArticleDetailsViewModel>(tag);
-            return View(nameof(Index), articles);
+            var articles = await _articlesApiProxy.GetByTagAsync<ArticleDetailsViewModel>(tag);
+            return View(nameof(Index), articles.OrderByDescending(a => a.DateCreated));
         }
     }
 }
