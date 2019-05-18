@@ -21,7 +21,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             ViewBag.Title = "Nyheder";
             var articles = await _ApiProxy.AllAsync<ArticleDetailsViewModel>();
-            return View(articles);
+            return View(articles.OrderByDescending(a => a.DateCreated));
         }
 
         // GET: Article/Details/5
@@ -34,6 +34,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: Article/Create
         public ActionResult Create()
         {
+            ViewBag.Title = "Opret nyhedsartikel";
             return View(new ArticleCreateViewModel());
         }
 

@@ -2,6 +2,16 @@
 
 
 <h2>@ViewData["Title"]</h2>
+<p>
+    @using (Html.BeginForm("GetByTag", "Article", new { tag = "" }, FormMethod.Get))
+    { 
+
+        @Html.Label("Søg tag")
+        @Html.TextBox("tag")
+
+        <button type="submit">Søg</button>
+    }
+</p>
 
 <p>
     <a asp-action="Create">Tilføj ny</a>
