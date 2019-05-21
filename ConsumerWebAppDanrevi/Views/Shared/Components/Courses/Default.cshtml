@@ -1,7 +1,12 @@
 ﻿@model IEnumerable<Models.Course.CourseDetailsViewModel>
-<h3>Kommende kurser</h3>
-<ul>
-@foreach(var c in Model){
-    <li>@Html.ActionLink(c.Name + $" starter {c.Start.ToString("dd-MM-yyyy HH:mm")}", "Details", "Course", new { id = c.Id })</li>
+<div id="courses">
+    <h3>Kommende kurser</h3>
+    <ul>
+        @foreach (var c in Model)
+    {
+        <li>@Html.ActionLink(c.Name + $" starter {c.Start.ToString("dd-MM-yyyy HH:mm")}", "Details", "Course", new { id = c.Id })</li>
 }
-</ul>
+    </ul>
+
+</div>
+

@@ -15,5 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Login\" />
+    <Folder Include="Deadline\" />
+    <Folder Include="Meeting\" />
   </ItemGroup>
 </Project>
