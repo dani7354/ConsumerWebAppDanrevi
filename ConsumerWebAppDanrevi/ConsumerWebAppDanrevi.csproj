@@ -22,6 +22,7 @@
     <Folder Include="Views\Shared\Components\Courses\" />
     <Folder Include="Views\Shared\Components\Articles\" />
     <Folder Include="Views\Shared\Components\Deadlines\" />
+    <Folder Include="Views\Deadline\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Dockerfile" />

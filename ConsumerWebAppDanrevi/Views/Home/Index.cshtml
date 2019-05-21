@@ -11,6 +11,7 @@
         </div>
         <div class="col-sm-4">
             @await Component.InvokeAsync("Courses", new { records = 5} )
+            @await  Component.InvokeAsync("Deadlines", new { records = 3})
         </div>
     </div>
 </div>

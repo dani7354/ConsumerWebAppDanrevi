@@ -1,5 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<Models.Deadline.DeadlineDetailsViewModel>
+<div id="courses">
+    <h3>Deadlines</h3>
+    <ul>
+        @foreach (var c in Model)
+        {
+            <li>@Html.ActionLink(c.Name + $" ({c.Date.ToString("dd-MM-yyyy HH:mm")})", "Details", "Deadline", new { id = c.Id })</li>
+        }
+    </ul>
+
+</div>
+
