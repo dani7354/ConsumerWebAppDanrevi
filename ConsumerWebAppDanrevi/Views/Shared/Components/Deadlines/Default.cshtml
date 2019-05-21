@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Models.Deadline.DeadlineDetailsViewModel>
-<div id="courses">
+<div id="">
     <h3>Deadlines</h3>
     <ul>
         @foreach (var c in Model)
         {
-            <li>@Html.ActionLink(c.Name + $" ({c.Date.ToString("dd-MM-yyyy HH:mm")})", "Details", "Deadline", new { id = c.Id })</li>
+            <li>@Html.ActionLink(c.Name + $" ({ c.Date.ToString("dd-MM-yyyy HH:mm")})", "Details", "Deadline", new { id = c.Id })</li>
         }
     </ul>
 
