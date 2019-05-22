@@ -15,12 +15,6 @@ namespace ConsumerWebAppDanrevi.Controllers
 {
     public class HomeController : Controller
     {
-        
-
-        public HomeController()
-        {
-           
-        }
         public IActionResult Index()
         {
             ViewBag.Name = HttpContext.Session.GetString("name");
