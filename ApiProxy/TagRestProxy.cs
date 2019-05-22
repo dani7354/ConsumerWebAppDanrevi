@@ -14,7 +14,6 @@ namespace ApiProxy
         {
             _baseEndpoint = endPoint;
         }
-   
         public async Task<IList<T>>GetAllTagsAsync<T>()
         {
             var httpClient = new HttpClient();

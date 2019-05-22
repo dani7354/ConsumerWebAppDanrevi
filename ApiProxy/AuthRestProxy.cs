@@ -16,7 +16,6 @@ namespace ApiProxy
         {
             this._baseEndpoint = baseEndpoint;
         }
-
         public async Task<User> LoginAsync<T>(T userCredentials)
         {
             var url = $"{_baseEndpoint}";
@@ -25,7 +24,6 @@ namespace ApiProxy
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(url, stringContent);
             response.EnsureSuccessStatusCode();
-           
          
             return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
         }

@@ -18,14 +18,6 @@ namespace ApiProxy
             _baseEndpoint = baseEndpoint;
         }
 
-        public IList<T> All<T>() where T : ArticleBase
-        {
-            var httpClient = new HttpClient();
-            var json = httpClient.GetStringAsync(_baseEndpoint).Result;
-            var articles = JsonConvert.DeserializeObject<List<T>>(json);
-            return articles;
-        }
-
         public async Task<IList<T>> AllAsync<T>() where T : ArticleBase
         {
             var httpClient = new HttpClient();
@@ -35,7 +27,7 @@ namespace ApiProxy
 
         }
 
-        public async  Task CreateAsync<T>(T article, string apiToken) where T : ArticleBase
+        public async Task CreateAsync<T>(T article, string apiToken) where T : ArticleBase
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
@@ -45,17 +37,6 @@ namespace ApiProxy
             response.EnsureSuccessStatusCode();
         }
 
-        public void Delete(int id)
-        {
-            var url = $"{_baseEndpoint}/{id}";
-            var httpClient = new HttpClient();
-            var response = httpClient.DeleteAsync(url);
-            if (!response.Result.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException(response.Result.StatusCode.ToString());
-            }
-        }
-
         public async Task DeleteAsync(int id, string apiToken)
         {
             var url = $"{_baseEndpoint}/{id}";
@@ -63,16 +44,6 @@ namespace ApiProxy
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
             var response = await httpClient.DeleteAsync(url);
             response.EnsureSuccessStatusCode();
-        }
-
-        public T Find<T>(int id) where T : ArticleBase
-        {
-            var url = $"{_baseEndpoint}/{id}";
-            var httpClient = new HttpClient();
-            var json = httpClient.GetStringAsync(url).Result;
-            var article = JsonConvert.DeserializeObject<T>(json);
-            return article;
-
         }
 
         public async Task<T> FindAsync<T>(int id) where T : ArticleBase
@@ -85,15 +56,6 @@ namespace ApiProxy
 
         }
 
-        public IList<T> GetByTag<T>(string tag)
-        {
-            var url = $"{_baseEndpoint}/tag/{tag}";
-            var httpClient = new HttpClient();
-            var json = httpClient.GetStringAsync(url).Result;
-            var articles = JsonConvert.DeserializeObject<List<T>>(json);
-            return articles;
-        }
-
         public async Task<IList<T>> GetByTagAsync<T>(string tag)
         {
             var url = $"{_baseEndpoint}/tag/{tag}";
@@ -101,15 +63,6 @@ namespace ApiProxy
             var json = await httpClient.GetStringAsync(url);
             var articles = JsonConvert.DeserializeObject<List<T>>(json);
             return articles;
-        }
-
-        public void Update<T>(int id, T article) where T : ArticleBase
-        {
-            var url = $"{_baseEndpoint}/{id}";
-            var httpClient = new HttpClient();
-            string json = JsonConvert.SerializeObject(article);
-            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = httpClient.PutAsync(url, stringContent);
         }
 
         public async Task UpdateAsync<T>(int id, T article, string apiToken) where T : ArticleBase

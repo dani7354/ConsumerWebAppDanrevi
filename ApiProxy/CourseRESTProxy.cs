@@ -29,22 +29,12 @@ namespace ApiProxy
 
         }
 
-        public IList<T> All<T>()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IList<T>> AllAsync<T>() where T : CourseBase
         {
             var httpClient = new HttpClient();
             var json = await httpClient.GetStringAsync(_baseEndpoint);
             var courses = JsonConvert.DeserializeObject<List<T>>(json);
             return courses;
-        }
-
-        public void Create<T>(T article)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task CreateAsync<T>(T course, string apiToken) where T : CourseBase
@@ -80,11 +70,6 @@ namespace ApiProxy
             };
             var response = await httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
-        }
-
-        public T Find<T>(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<T> FindAsync<T>(int id) where T : CourseBase
