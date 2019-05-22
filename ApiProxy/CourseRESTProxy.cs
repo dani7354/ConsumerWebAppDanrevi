@@ -16,7 +16,6 @@ namespace ApiProxy
         {
             _baseEndpoint = baseEndpoint;
         }
-
         public async Task AddParticipantAsync(int courseId, string participantEmail, string apiToken)
         {
             var httpClient = new HttpClient();
@@ -26,9 +25,7 @@ namespace ApiProxy
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(url, stringContent);
             response.EnsureSuccessStatusCode();
-
         }
-
         public async Task<IList<T>> AllAsync<T>() where T : CourseBase
         {
             var httpClient = new HttpClient();
@@ -80,7 +77,6 @@ namespace ApiProxy
             var course = JsonConvert.DeserializeObject<T>(json);
             return course;
         }
-
         public async Task<T> FindWithParticipantsAsync<T>(int id, string apiToken) where T : CourseBase
         {
             var url = $"{_baseEndpoint}/{id}/participants";
@@ -90,7 +86,6 @@ namespace ApiProxy
             var course = JsonConvert.DeserializeObject<T>(json);
             return course;
         }
-
         public async Task UpdateAsync<T>(int id, T course, string apiToken) where T : CourseBase
         {
             var url = $"{_baseEndpoint}/{id}";
