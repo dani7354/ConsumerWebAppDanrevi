@@ -21,8 +21,16 @@ namespace ConsumerWebAppDanrevi.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var deadline = await _apiProxy.FindDeadline<DeadlineDetailsViewModel>(id);
-            return View(deadline);
+            try
+            {
+                var deadline = await _apiProxy.FindDeadline<DeadlineDetailsViewModel>(id);
+                return View(deadline);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+          
         }
    
     

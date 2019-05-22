@@ -17,7 +17,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         public ArticleController(IArticleApiProxy _articleApiProxy, ITagApiProxy tagApiProxy)
         {
             _articlesApiProxy = _articleApiProxy;
-            this._tagApiProxy = tagApiProxy;
+            _tagApiProxy = tagApiProxy;
         }
         // GET: Article
         public async Task<ActionResult> Index()
@@ -31,8 +31,16 @@ namespace ConsumerWebAppDanrevi.Controllers
         // GET: Article/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var article = await _articlesApiProxy.FindAsync<ArticleDetailsViewModel>(id);
-            return View(article);
+            try
+            {
+                var article = await _articlesApiProxy.FindAsync<ArticleDetailsViewModel>(id);
+                return View(article);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+           
         }
 
         // GET: Article/Create
@@ -54,7 +62,7 @@ namespace ConsumerWebAppDanrevi.Controllers
             }
             catch(Exception)
             {
-                return View();
+                return View(article);
             }
         }
 
@@ -93,16 +101,24 @@ namespace ConsumerWebAppDanrevi.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception)
             {
-                return View();
+                return View(article);
             }
         }
 
         // GET: Article/Delete/5
         public async  Task<ActionResult> Delete(int id)
         {
-          await _articlesApiProxy.DeleteAsync(id, HttpContext.Session.GetString("token"));
+            try
+            {
+                await _articlesApiProxy.DeleteAsync(id, HttpContext.Session.GetString("token"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+           
             return RedirectToAction(nameof(Index));
         }
 
@@ -110,8 +126,17 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             ViewBag.Tags = await _tagApiProxy.GetAllTagsAsync<string>();
             ViewBag.Title = $"#{tag}";
-            var articles = await _articlesApiProxy.GetByTagAsync<ArticleDetailsViewModel>(tag);
-            return View(nameof(Index), articles.OrderByDescending(a => a.DateCreated));
+            try
+            {
+                var articles = await _articlesApiProxy.GetByTagAsync<ArticleDetailsViewModel>(tag);
+                return View(nameof(Index), articles.OrderByDescending(a => a.DateCreated));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+           
+           
         }
     }
 }
