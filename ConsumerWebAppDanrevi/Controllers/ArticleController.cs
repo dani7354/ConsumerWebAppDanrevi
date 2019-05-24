@@ -23,9 +23,17 @@ namespace ConsumerWebAppDanrevi.Controllers
         public async Task<ActionResult> Index()
         {
             ViewBag.Title = "Nyheder";
-            ViewBag.Tags = await _tagApiProxy.GetAllTagsAsync<string>();
-            var articles = await _articlesApiProxy.AllAsync<ArticleDetailsViewModel>();
-            return View(articles.OrderByDescending(a => a.DateCreated));
+            try
+            {
+                ViewBag.Tags = await _tagApiProxy.GetAllTagsAsync<string>();
+                var articles = await _articlesApiProxy.AllAsync<ArticleDetailsViewModel>();
+                return View(articles.OrderByDescending(a => a.DateCreated));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+           
         }
 
         // GET: Article/Details/5

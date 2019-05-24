@@ -25,6 +25,7 @@ namespace ConsumerWebAppDanrevi.Middleware
             if(!context.Session.Keys.Any(x => x == "token") &&  context.Request.Path.Value != loginRoute)
             {
                 context.Response.Redirect(loginRoute);
+                
                 return;
             }   
           
