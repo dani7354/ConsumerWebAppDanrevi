@@ -6,15 +6,19 @@ using Microsoft.AspNetCore.Http;
 using ApiProxy.Contracts;
 using Models.Course;
 using Microsoft.AspNetCore.Mvc;
+using ConsumerWebAppDanrevi.Services.Contracts;
 
 namespace ConsumerWebAppDanrevi.Controllers
 {
     public class CourseController : Controller
     {
         private readonly ICourseApiProxy _apiProxy;
-        public CourseController(ICourseApiProxy apiProxy)
+        private readonly ITokenAuth _tokenAuth;
+
+        public CourseController(ICourseApiProxy apiProxy, ITokenAuth tokenAuth)
         {
             _apiProxy = apiProxy;
+            _tokenAuth = tokenAuth;
         }
         // GET: Course
         public async Task<ActionResult> Index()
@@ -37,7 +41,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-                var course = await _apiProxy.FindWithParticipantsAsync<CourseDetailsViewModel>(id, HttpContext.Session.GetString("token"));
+                var course = await _apiProxy.FindWithParticipantsAsync<CourseDetailsViewModel>(id,_tokenAuth.GetToken());
                 ViewBag.Title = course.Name;
                 return View(course);
             }
@@ -65,7 +69,7 @@ namespace ConsumerWebAppDanrevi.Controllers
             }
             try
             {
-                await _apiProxy.CreateAsync(course, HttpContext.Session.GetString("token"));
+                await _apiProxy.CreateAsync(course, _tokenAuth.GetToken());
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception ex)
@@ -93,7 +97,7 @@ namespace ConsumerWebAppDanrevi.Controllers
             }
             try
             {
-                await _apiProxy.UpdateAsync(id, course, HttpContext.Session.GetString("token"));
+                await _apiProxy.UpdateAsync(id, course, _tokenAuth.GetToken());
 
                 return RedirectToAction(nameof(Index));
             }
@@ -108,7 +112,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-                await _apiProxy.DeleteAsync(id, HttpContext.Session.GetString("token"));
+                await _apiProxy.DeleteAsync(id, _tokenAuth.GetToken());
             }
             catch (Exception ex)
             {
@@ -122,7 +126,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-                await _apiProxy.DeleteParticipantAsync(courseId, email, HttpContext.Session.GetString("token"));
+                await _apiProxy.DeleteParticipantAsync(courseId, email, _tokenAuth.GetToken());
             }
             catch (Exception ex)
             {
@@ -137,7 +141,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-                await _apiProxy.AddParticipantAsync(courseId, email, HttpContext.Session.GetString("token"));
+                await _apiProxy.AddParticipantAsync(courseId, email, _tokenAuth.GetToken());
             }
             catch (Exception ex)
             {

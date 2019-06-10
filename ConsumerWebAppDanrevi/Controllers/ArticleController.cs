@@ -6,6 +6,7 @@ using ApiProxy.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Article;
+using ConsumerWebAppDanrevi.Services.Contracts;
 
 namespace ConsumerWebAppDanrevi.Controllers
 {
@@ -13,11 +14,13 @@ namespace ConsumerWebAppDanrevi.Controllers
     {
         private readonly IArticleApiProxy _articlesApiProxy;
         private readonly ITagApiProxy _tagApiProxy;
+        private readonly ITokenAuth _tokenAuth;
 
-        public ArticleController(IArticleApiProxy _articleApiProxy, ITagApiProxy tagApiProxy)
+        public ArticleController(IArticleApiProxy _articleApiProxy, ITagApiProxy tagApiProxy, ITokenAuth tokenAuth)
         {
             _articlesApiProxy = _articleApiProxy;
             _tagApiProxy = tagApiProxy;
+            this._tokenAuth = tokenAuth;
         }
         // GET: Article
         public async Task<ActionResult> Index()
@@ -65,7 +68,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-               await _articlesApiProxy.CreateAsync<ArticleCreateViewModel>(article, HttpContext.Session.GetString("token"));
+               await _articlesApiProxy.CreateAsync<ArticleCreateViewModel>(article, _tokenAuth.GetToken());
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception)
@@ -104,7 +107,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-                await _articlesApiProxy.UpdateAsync(id, article, HttpContext.Session.GetString("token"));
+                await _articlesApiProxy.UpdateAsync(id, article, _tokenAuth.GetToken());
                
 
                 return RedirectToAction(nameof(Index));
@@ -120,7 +123,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         {
             try
             {
-                await _articlesApiProxy.DeleteAsync(id, HttpContext.Session.GetString("token"));
+                await _articlesApiProxy.DeleteAsync(id, _tokenAuth.GetToken());
             }
             catch (Exception ex)
             {
