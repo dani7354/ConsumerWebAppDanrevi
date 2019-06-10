@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ConsumerWebAppDanrevi.Services;
+using ConsumerWebAppDanrevi.Services.Contracts;
 
 namespace ConsumerWebAppDanrevi
 {
@@ -47,6 +49,8 @@ namespace ConsumerWebAppDanrevi
             });
             // Gør HttpContext tilgængelig i services
             services.AddHttpContextAccessor();
+
+            services.AddTransient<ITokenAuth, SessionTokenAuth>();
 
             // API proxies
             services.AddTransient<IArticleApiProxy>(p => new ArticleRestProxy(Configuration.GetValue<string>("ApiEndpoints:Articles")));

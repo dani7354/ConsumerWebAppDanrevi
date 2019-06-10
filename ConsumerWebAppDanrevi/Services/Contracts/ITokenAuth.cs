@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ConsumerWebAppDanrevi.Services
+namespace ConsumerWebAppDanrevi.Services.Contracts
 {
     public interface ITokenAuth
     {

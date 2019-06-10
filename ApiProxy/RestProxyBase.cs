@@ -3,18 +3,26 @@ using System.Net.Http;
 
 namespace ApiProxy
 {
-    internal abstract class RestProxyBase
+    public abstract class RestProxyBase
     {
-        private readonly string baseEndpoint;
+        protected readonly string _baseEndpoint;
        
 
-        protected RestProxyBase(string baseEndpoint, string token)
+        protected RestProxyBase(string baseEndpoint)
         {
-            this.baseEndpoint = baseEndpoint;
+            this._baseEndpoint = baseEndpoint;
         }
-        public HttpClient SetupHttpClient()
+        protected HttpClient SetupHttpClient(string token = null)
         {
-            return null;
+            var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(_baseEndpoint);
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            if (token != null)
+            {
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            }
+
+            return httpClient;
         }
     }
 }

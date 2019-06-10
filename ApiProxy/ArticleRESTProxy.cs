@@ -10,21 +10,20 @@ using Newtonsoft.Json;
 
 namespace ApiProxy
 {
-    public class ArticleRestProxy : IArticleApiProxy
+    public class ArticleRestProxy : RestProxyBase, IArticleApiProxy
     {
-        private readonly string _baseEndpoint;
-        public ArticleRestProxy(string baseEndpoint)
-        {
-            _baseEndpoint = baseEndpoint;
-        }
+
+        public ArticleRestProxy(string baseEndpoint) : base(baseEndpoint)
+        {}
 
         public async Task<IList<T>> AllAsync<T>() where T : ArticleBase
         {
-            var httpClient = new HttpClient();
-            var json = await httpClient.GetStringAsync(_baseEndpoint);
-            var articles = JsonConvert.DeserializeObject<List<T>>(json);
-            return articles;
-
+            using(var httpClient = base.SetupHttpClient())
+            {
+                var json = await httpClient.GetStringAsync(string.Empty);
+                var articles = JsonConvert.DeserializeObject<List<T>>(json);
+                return articles;
+            }
         }
 
         public async Task CreateAsync<T>(T article, string apiToken) where T : ArticleBase
