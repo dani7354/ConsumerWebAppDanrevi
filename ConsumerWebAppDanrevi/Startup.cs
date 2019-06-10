@@ -45,8 +45,10 @@ namespace ConsumerWebAppDanrevi
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            // Gør HttpContext tilgængelig i services
+            services.AddHttpContextAccessor();
+
             // API proxies
-            
             services.AddTransient<IArticleApiProxy>(p => new ArticleRestProxy(Configuration.GetValue<string>("ApiEndpoints:Articles")));
             services.AddTransient<ICourseApiProxy>(p => new CourseRestProxy(Configuration.GetValue<string>("ApiEndpoints:Courses")));
             services.AddTransient<IAuthApiProxy>(p => new AuthRestProxy(Configuration.GetValue<string>("ApiEndpoints:Auth")));
@@ -59,6 +61,7 @@ namespace ConsumerWebAppDanrevi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
