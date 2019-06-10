@@ -1,15 +1,16 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Forside";
 }
 <h1>Velkommen, @ViewBag.Name</h1>
 <div class="container">
     <div class="row">
         <div class="col-sm-8">
-            @await  Component.InvokeAsync("Articles")
+            @await Component.InvokeAsync("Articles")
         </div>
         <div class="col-sm-4">
-            @await Component.InvokeAsync("Courses", new { records = 5} )
-            @await  Component.InvokeAsync("Deadlines", new { records = 3})
+            @await Component.InvokeAsync("Courses", new { records = 5 })
+            @await Component.InvokeAsync("Deadlines", new { records = 3 })
         </div>
     </div>
 </div>

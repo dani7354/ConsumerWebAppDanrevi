@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Session;
 using ApiProxy.Contracts;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
+using ConsumerWebAppDanrevi.Services.Contracts;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,9 +17,12 @@ namespace ConsumerWebAppDanrevi.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthApiProxy _apiProxy;
-        public AuthController(IAuthApiProxy apiProxy)
+        private readonly ITokenAuth _tokenAuth;
+
+        public AuthController(IAuthApiProxy apiProxy, ITokenAuth tokenAuth)
         {
            _apiProxy= apiProxy;
+            _tokenAuth = tokenAuth;
         }
 
         // GET: /<controller>/
@@ -38,9 +42,8 @@ namespace ConsumerWebAppDanrevi.Controllers
             try
             {
                 var user = await _apiProxy.LoginAsync(credentials);
-                HttpContext.Session.SetString("token", user.Token);
-                HttpContext.Session.SetString("email", user.Email);
-                HttpContext.Session.SetString("name", user.Name);
+                _tokenAuth.SetSessionUserVariables(user);
+
 
             }
             catch(HttpRequestException ex)
@@ -58,7 +61,7 @@ namespace ConsumerWebAppDanrevi.Controllers
         [HttpGet]
         public  ActionResult Logout()
         {
-            HttpContext.Session.Clear();
+            _tokenAuth.ClearSession();
             return RedirectToAction(nameof(Login));
 
         }

@@ -6,7 +6,6 @@ namespace ApiProxy
     public abstract class RestProxyBase
     {
         protected readonly string _baseEndpoint;
-       
 
         protected RestProxyBase(string baseEndpoint)
         {

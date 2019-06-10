@@ -10,14 +10,21 @@ using ApiProxy.Contracts;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using Models.Article;
+using ConsumerWebAppDanrevi.Services.Contracts;
 
 namespace ConsumerWebAppDanrevi.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ITokenAuth _tokenAuth;
+
+        public HomeController(ITokenAuth tokenAuth)
+        {
+            _tokenAuth = tokenAuth;
+        }
         public IActionResult Index()
         {
-            ViewBag.Name = HttpContext.Session.GetString("name");
+            ViewBag.Name = _tokenAuth.GetUser().Name;
             return View();
         }
 
