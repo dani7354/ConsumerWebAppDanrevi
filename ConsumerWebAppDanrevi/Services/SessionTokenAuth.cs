@@ -14,7 +14,6 @@ namespace ConsumerWebAppDanrevi.Services
         private const string EMAIL_SESSION_KEY = "email";
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-
         public SessionTokenAuth(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;

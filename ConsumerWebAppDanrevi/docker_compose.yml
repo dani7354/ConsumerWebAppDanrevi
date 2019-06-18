@@ -1,5 +1,18 @@
 version: '3'
+networks:
+  localnetwork:
 services:
+  db:
+    image: "mysql:latest"
+    command: --default-authentication-plugin=mysql_native_password 
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=password123
+      - MYSQL_DATABASE=danrevi_web
+      - MYSQL_USER=danrevi
+      - MYSQL_PASSWORD=danrevi1234
+    networks:
+      - localnetwork
   api:
     image: "dani7354/danrevi-webapi:latest"
     ports:
@@ -12,12 +25,4 @@ services:
       - "80:80"
     networks:
       - localnetwork
-networks:
-  localnetwork:
-
-  
-
-
-
-
 
