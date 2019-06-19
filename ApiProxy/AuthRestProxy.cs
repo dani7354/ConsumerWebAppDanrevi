@@ -8,16 +8,20 @@ using Models.Login;
 
 namespace ApiProxy
 {
-    public class AuthRestProxy : RestProxyBase, IAuthApiProxy
+    public class AuthRestProxy : IAuthApiProxy
     {
-        public AuthRestProxy(string baseEndpoint) : base(baseEndpoint) {}
+        private readonly string baseEndpoint;
+
+        public AuthRestProxy(string baseEndpoint) {
+            this.baseEndpoint = baseEndpoint;
+        }
         public async Task<User> LoginAsync<T>(T userCredentials)
         {
-            using (var httpClient = base.SetupHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 var json = JsonConvert.SerializeObject(userCredentials);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync(string.Empty, stringContent);
+                var response = await httpClient.PostAsync(baseEndpoint, stringContent);
                 response.EnsureSuccessStatusCode();
                 return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
             }   

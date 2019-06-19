@@ -9,9 +9,12 @@ namespace ApiProxy
 {
     public class TagRestProxy : RestProxyBase, ITagApiProxy
     {
+        private readonly string _baseEndpoint;
 
-        public TagRestProxy(string endPoint) : base(endPoint)
-        { }
+        public TagRestProxy(string baseEndpoint)
+        {
+            this._baseEndpoint = baseEndpoint;
+        }
         public async Task<IList<T>>GetAllTagsAsync<T>()
         {
             using (var httpClient = new HttpClient())

@@ -12,14 +12,18 @@ namespace ApiProxy
 {
     public class ArticleRestProxy : RestProxyBase, IArticleApiProxy
     {
-        public ArticleRestProxy(string baseEndpoint) : base(baseEndpoint)
-        {}
+        private readonly string baseEndpoint;
+
+        public ArticleRestProxy(string baseEndpoint) 
+        {
+            this.baseEndpoint = baseEndpoint;
+        }
 
         public async Task<IList<T>> AllAsync<T>() where T : ArticleBase
         {
             using(var httpClient = base.SetupHttpClient())
             {
-                var json = await httpClient.GetStringAsync(string.Empty);
+                var json = await httpClient.GetStringAsync(baseEndpoint);
                 var articles = JsonConvert.DeserializeObject<List<T>>(json);
                 return articles;
             }
@@ -31,7 +35,7 @@ namespace ApiProxy
             {
                 string json = JsonConvert.SerializeObject(article);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync(string.Empty, stringContent);
+                var response = await httpClient.PostAsync(baseEndpoint, stringContent);
                 response.EnsureSuccessStatusCode();
             }  
         }
@@ -39,7 +43,7 @@ namespace ApiProxy
         public async Task DeleteAsync(int id, string apiToken)
         {
       
-            var url = $"{id}";
+            var url = $"{baseEndpoint}/{id}";
             using (var httpClient = base.SetupHttpClient(apiToken))
             {
                 var response = await httpClient.DeleteAsync(url);
@@ -49,7 +53,7 @@ namespace ApiProxy
         public async Task<T> FindAsync<T>(int id) where T : ArticleBase
         {
 
-            var url = $"{id}";
+            var url = $"{baseEndpoint}/{id}";
             using (var httpClient = base.SetupHttpClient())
             {
                 var json = await httpClient.GetStringAsync(url);
@@ -59,7 +63,7 @@ namespace ApiProxy
         }
         public async Task<IList<T>> GetByTagAsync<T>(string tag)
         {
-            var url = $"tag/{tag}";
+            var url = $"{baseEndpoint}/tag/{tag}";
             using (var httpClient = base.SetupHttpClient())
             {
                 var json = await httpClient.GetStringAsync(url);
@@ -69,7 +73,7 @@ namespace ApiProxy
         }
         public async Task UpdateAsync<T>(int id, T article, string apiToken) where T : ArticleBase
         {
-            var url = $"{id}";
+            var url = $"{baseEndpoint}/{id}";
             using (var httpClient = base.SetupHttpClient(apiToken))
             {
                 string json = JsonConvert.SerializeObject(article);

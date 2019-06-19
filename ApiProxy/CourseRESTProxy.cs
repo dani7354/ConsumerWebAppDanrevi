@@ -11,11 +11,15 @@ namespace ApiProxy
 {
     public class CourseRestProxy : RestProxyBase,  ICourseApiProxy
     {
-        public CourseRestProxy(string baseEndpoint) : base(baseEndpoint)
-        {}
+        private readonly string _baseEndpoint;
+
+        public CourseRestProxy(string baseEndpoint) 
+        {
+            this._baseEndpoint = baseEndpoint;
+        }
         public async Task AddParticipantAsync(int courseId, string participantEmail, string apiToken)
         {
-            var url = $"{courseId}/participants";
+            var url = $"{_baseEndpoint}/{courseId}/participants";
             using (var httpClient = base.SetupHttpClient(apiToken))
             {
                 var json = "{\"email\":\"" + participantEmail + "\"}";
@@ -57,7 +61,7 @@ namespace ApiProxy
 
         public async Task DeleteParticipantAsync(int courseId, string participantEmail, string apiToken)
         {
-            var url = $"{courseId}/participants?email={participantEmail}";
+            var url = $"{_baseEndpoint}/{courseId}/participants?email={participantEmail}";
             using (var httpClient = base.SetupHttpClient(apiToken))
             {        
                 var response = await httpClient.DeleteAsync(url);
@@ -67,7 +71,7 @@ namespace ApiProxy
 
         public async Task<T> FindAsync<T>(int id) where T : CourseBase
         {
-            var url = $"{id}";
+            var url = $"{_baseEndpoint}/{id}";
             using (var httpClient = base.SetupHttpClient())
             {
                 var json = await httpClient.GetStringAsync(url);
@@ -77,7 +81,7 @@ namespace ApiProxy
         }
         public async Task<T> FindWithParticipantsAsync<T>(int id, string apiToken) where T : CourseBase
         {
-            var url = $"{id}/participants";
+            var url = $"{_baseEndpoint}/{id}/participants";
             using (var httpClient = base.SetupHttpClient(apiToken))
             {
                 var json = await httpClient.GetStringAsync(url);
@@ -87,7 +91,7 @@ namespace ApiProxy
         }
         public async Task UpdateAsync<T>(int id, T course, string apiToken) where T : CourseBase
         {
-            var url = $"{id}";
+            var url = $"{_baseEndpoint}/{id}";
             using (var httpClient = base.SetupHttpClient(apiToken))
             {
                 string json = JsonConvert.SerializeObject(course);

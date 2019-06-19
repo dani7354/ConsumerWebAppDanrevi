@@ -8,12 +8,15 @@ namespace ApiProxy
 {
     public class DeadlineRestProxy : RestProxyBase, IDeadlinesApiProxy
     {
+        private readonly string _baseEndpoint;
 
-        public DeadlineRestProxy(string baseEndpoint) : base(baseEndpoint)
-        {}
+        public DeadlineRestProxy(string baseEndpoint) 
+        {
+            this._baseEndpoint = baseEndpoint;
+        }
         public async Task<T> FindDeadline<T>(int id)
         {
-            var url = $"{id}";
+            var url = $"{_baseEndpoint}/{id}";
             using (var httpClient = base.SetupHttpClient())
             {
                 var json = await httpClient.GetStringAsync(url);
