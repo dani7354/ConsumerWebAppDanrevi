@@ -14,7 +14,7 @@ namespace ApiProxy
         protected HttpClient SetupHttpClient(string token = null)
         {
             var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(_baseEndpoint);
+            httpClient.BaseAddress = new Uri($"{_baseEndpoint}/");
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             if (token != null)
             {
