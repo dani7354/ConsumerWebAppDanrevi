@@ -7,19 +7,19 @@ using Newtonsoft.Json;
 
 namespace ApiProxy
 {
-    public class TagRestProxy : ITagApiProxy
+    public class TagRestProxy : RestProxyBase, ITagApiProxy
     {
-        private readonly string _baseEndpoint;
-        public TagRestProxy(string endPoint)
-        {
-            _baseEndpoint = endPoint;
-        }
+
+        public TagRestProxy(string endPoint) : base(endPoint)
+        { }
         public async Task<IList<T>>GetAllTagsAsync<T>()
         {
-            var httpClient = new HttpClient();
-            var json = await httpClient.GetStringAsync(_baseEndpoint);
-            var tags = JsonConvert.DeserializeObject<List<T>>(json);
-            return tags;
+            using (var httpClient = new HttpClient())
+            {
+                var json = await httpClient.GetStringAsync(_baseEndpoint);
+                var tags = JsonConvert.DeserializeObject<List<T>>(json);
+                return tags;
+            }     
         }
     }
 }
