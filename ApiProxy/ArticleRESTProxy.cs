@@ -28,12 +28,13 @@ namespace ApiProxy
 
         public async Task CreateAsync<T>(T article, string apiToken) where T : ArticleBase
         {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
-            string json = JsonConvert.SerializeObject(article);
-            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync(_baseEndpoint, stringContent);
-            response.EnsureSuccessStatusCode();
+            using(var httpClient = base.SetupHttpClient(apiToken))
+            {
+                string json = JsonConvert.SerializeObject(article);
+                var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await httpClient.PostAsync(string.Empty, stringContent);
+                response.EnsureSuccessStatusCode();
+            }  
         }
 
         public async Task DeleteAsync(int id, string apiToken)
