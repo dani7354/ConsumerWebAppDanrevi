@@ -46,7 +46,6 @@ namespace ApiProxy
                 response.EnsureSuccessStatusCode();
             }
         }
-
         public async Task<T> FindAsync<T>(int id) where T : ArticleBase
         {
 
@@ -58,7 +57,6 @@ namespace ApiProxy
                 return article;
             }
         }
-
         public async Task<IList<T>> GetByTagAsync<T>(string tag)
         {
             var url = $"tag/{tag}";
@@ -68,9 +66,7 @@ namespace ApiProxy
                 var articles = JsonConvert.DeserializeObject<List<T>>(json);
                 return articles;
             }
-            
         }
-
         public async Task UpdateAsync<T>(int id, T article, string apiToken) where T : ArticleBase
         {
             var url = $"{id}";

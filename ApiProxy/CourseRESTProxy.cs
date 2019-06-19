@@ -47,7 +47,7 @@ namespace ApiProxy
 
         public async Task DeleteAsync(int id, string apiToken)
         {
-            var url = $"{id}"
+            var url = $"{id}";
             using (var httpClient = base.SetupHttpClient(apiToken))
             {
                 var response = await httpClient.DeleteAsync(url);
