@@ -12,7 +12,6 @@ namespace ApiProxy
 {
     public class ArticleRestProxy : RestProxyBase, IArticleApiProxy
     {
-
         public ArticleRestProxy(string baseEndpoint) : base(baseEndpoint)
         {}
 
